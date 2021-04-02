@@ -1,0 +1,104 @@
+{
+    "openapi": "3.0.2",
+    "info": {
+        "title": "SMART Data Science Application",
+        "description": "A Smart Data Sceince Application running on FastAPI + uvicorn",
+        "version": "0.0.1"
+    },
+    "paths": {
+        "/{index}": {
+            "get": {
+                "summary": "Get Result",
+                "operationId": "get_result__index__get",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "The name of the Index",
+                            "allOf": [
+                                {
+                                    "$ref": "#/components/schemas/Index"
+                                }
+                            ]
+                        },
+                        "name": "index",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "HTTPValidationError": {
+                "title": "HTTPValidationError",
+                "type": "object",
+                "properties": {
+                    "detail": {
+                        "title": "Detail",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ValidationError"
+                        }
+                    }
+                }
+            },
+            "Index": {
+                "title": "Index",
+                "enum": [
+                    "FTSE100",
+                    "SNP500",
+                    "Dow Jones"
+                ],
+                "type": "string",
+                "description": "An enumeration."
+            },
+            "ValidationError": {
+                "title": "ValidationError",
+                "required": [
+                    "loc",
+                    "msg",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "loc": {
+                        "title": "Location",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "msg": {
+                        "title": "Message",
+                        "type": "string"
+                    },
+                    "type": {
+                        "title": "Error Type",
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}
